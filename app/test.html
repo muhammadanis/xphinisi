@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html ng-app="storeApp">
+
+<head>
+  <title>AngularJS is awesome</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+
+<body ng-controller="formController">
+  <div class="container">
+
+    <div class="col-md-6 col-md-offset-3">
+      <div class="page header">
+        <h1><span class="glyphicon glyphicon-tower"></span>Sample Store</h1>
+      </div>
+
+      <form ng-submit="processForm()">
+        <div id="name-group" class="form-group">
+          <label>Nama Barang</label>
+          <input type="text" name="productName" class="form-control" ng-model="formData.productName">
+        </div>
+        <div id="qty-group" class="form-group">
+          <label>Quantity</label>
+          <input type="text" name="productQty" class="form-control" ng-model="formData.productQty">
+        </div>
+        <div id="price-group" class="form-group">
+          <label>Harga</label>
+          <input type="text" name="productPrice" class="form-control" ng-model="formData.productPrice">
+        </div>
+        <button type="submit" class="btn btn-lg btn-block">
+          Purchase
+        </button>
+      </form>
+
+      <pre>
+        {{ formData }}
+      </pre>
+
+    </div>
+
+  </div>
+</body>
+
+<script type="text/javascript">
+  
+  var storeApp = angular.module("storeApp",[]);
+
+  function formController($scope, $http){
+    $scope.formData = {};
+    $scope.processForm = function(){
+      $http({
+        method  : 'POST',
+        url     : 'pay.html',
+        data    : $scope.formData,
+        headers : { 'Content-Type': 'application/json' }
+      })
+      .success(function(data) {
+        console.log(data);
+
+        if(!data.success) {
+
+        }
+        else {
+
+        }
+
+      });
+    };
+  }
+
+</script>
+
+</html>

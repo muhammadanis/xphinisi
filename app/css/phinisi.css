@@ -1,0 +1,355 @@
+body {
+  background: url(../img/dummy-data/dummy-branding.jpg) no-repeat center center fixed;
+  padding-top: 20px;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.header {
+  text-align: center;
+}
+.logo {
+  margin: 0;
+  text-align: center;
+}
+.label {
+  display: block;
+  color: #555555;
+  text-transform: uppercase;
+  font-size: smaller;
+  padding: 5px 0;
+}
+.label2 {
+  display: block;
+  color: #555555;
+  font-size: smaller;
+  padding: 5px 0;
+}
+.default-text {
+  color: #dddddd;
+}
+.wrapper {
+  border: 1px solid #c3c3c3;
+  margin-bottom: 8px;
+  background-color: #fff;
+  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+.inner-wrapper {
+  padding: 10px;
+}
+.inner-wrapper:before,
+.inner-wrapper:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+.inner-wrapper:after {
+  clear: both;
+}
+.w-title {
+  padding: 10px 10px;
+  border-bottom: 1px solid #cccccc;
+  background-color: #fff;
+  color: #555;
+  margin: 0;
+  text-transform: uppercase;
+}
+.total-amount {
+  font-size: 24px;
+  color: #555555;
+}
+.content-wrapper {
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  -webkit-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+.content-wrapper input:focus {
+  outline: 0;
+}
+.content-wrapper input.cc-data {
+  width: 100%;
+  border: 0px;
+}
+.content-wrapper .list-inline {
+  margin-bottom: 0;
+}
+.tab {
+
+  border-bottom: 1px solid #cccccc;
+  margin-bottom: -1px;
+}
+.tab > h5 {
+  padding: 10px 10px;
+  border-bottom: 1px solid #cccccc;
+  background-color: #fff;
+  color: #555;
+  margin: 0;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.hr-product {
+  color: #EFEFEF;
+  margin: 0;
+  display: block;
+
+}
+.btn-pay {
+  text-transform: uppercase;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 12px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+}
+.btn-show-details {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-color: #cccccc;
+  border-radius: 0;
+  padding: 5px 15px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.btn-show-details:hover {
+  color: #333333;
+  background-color: #EFEFEF;
+}
+.btn-hide-details,
+.btn-hide-details:focus {
+  color: #FFFFFF;
+  background-color: #636363;
+  border-color: #cccccc;
+  border-radius: 0;
+  padding: 5px 15px;
+}
+.btn-hide-details:hover {
+  color: #FFFFFF;
+  background-color: #747474;
+}
+.credit-card {
+  background-color: #efefef;
+  padding: 10px;
+  border-top: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+}
+.credit-card input {
+  border: 0;
+}
+.card-number {
+  font-size: 24px;
+  color: #555555;
+}
+.cc-data {
+  font-size: 14px;
+}
+.cc-icon {
+/*  display: block;*/
+  width: 52px;
+  height: 33px;
+  display: inline-block;
+}
+.card-visa {
+  background: url(../img/visa_logo.png);
+  -webkit-transition: opacity 0.4s ease-in-out;
+  -o-transition: opacity 0.4s ease-in-out;
+  -moz-transition: opacity 0.4s ease-in-out;
+  transition: opacity 0.4s ease-in-out;
+  opacity: 1;
+}
+.card-mastercard {
+  background: url(../img/mastercard_logo.png);
+  -webkit-transition: opacity 0.4s ease-in-out;
+  -o-transition: opacity 0.4s ease-in-out;
+  -moz-transition: opacity 0.4s ease-in-out;
+  transition: opacity 0.4s ease-in-out;
+  opacity: 1;
+}
+.card-invalid {
+  background: url(../img/sprites.png) 0 -74px no-repeat;
+  -webkit-transition: opacity 0.4s ease-in-out;
+  -o-transition: opacity 0.4s ease-in-out;
+  -moz-transition: opacity 0.4s ease-in-out;
+  transition: opacity 0.4s ease-in-out;
+  opacity: 1;
+}
+.card-default {
+  background: url(../img/sprites.png) 0 -110px no-repeat;
+  -webkit-transition: opacity 0.4s ease-in-out;
+  -o-transition: opacity 0.4s ease-in-out;
+  -moz-transition: opacity 0.4s ease-in-out;
+  transition: opacity 0.4s ease-in-out;
+  opacity: 0.5;
+}
+.purchased-product {
+  background-color: #636363;
+  margin: 0 -1px;
+  padding: 0 1px;
+  color: #efefef;
+  font-size: 12px;
+}
+.item {
+  padding: 10px 0;
+}
+.item-name,
+.quantity,
+.price {
+  display: block;
+}
+.item-name {
+  text-transform: uppercase;
+}
+.price {
+  text-align: right;
+}
+.price.total {
+  font-size: 16px;
+}
+.payment-options,
+.shipping-information {
+  background-color: #efefef;
+  border-bottom: 1px solid #cccccc;
+}
+.payment-options .row {
+  margin-bottom: 10px;
+}
+.bank-logo {
+  display: inline-block;
+  width: 120px;
+  height: 40px;
+}
+.bank-bni {
+  background: url(../img/bni_logo.png);
+}
+.bank-mandiri {
+  background: url(../img/mandiri_logo.png);
+}
+.bank-cimbniaga {
+  background: url(../img/cimb_clicks_logo.png);
+}
+@media (max-width: 480px) {
+  .total-amount {
+    font-size: 18px;
+  }
+  .content-wrapper {
+    padding: 5px;
+  }
+  .card-number {
+    font-size: 16px;
+  }
+  .cc-icon {
+    margin-top: 2px;
+    width: 39px;
+    height: 24.75px;
+  }
+  .card-visa {
+    background: url(../img/sprites-smaller.png) 0 0 no-repeat;
+  }
+  .card-mastercard {
+    background: url(../img/sprites-smaller.png) 0 -28px no-repeat;
+  }
+  .card-invalid {
+    background: url(../img/sprites-smaller.png) 0 -54px no-repeat;
+  }
+  .card-default {
+    background: url(../img/sprites-smaller.png) 0 -82px no-repeat;
+  }
+  .bank-logo {
+    display: inline-block;
+    width: 80px;
+    height: 24px;
+  }
+  .bank-bni {
+    background: url(../img/bni_logo_smaller.png);
+  }
+  .bank-mandiri {
+    background: url(../img/mandiri_logo_smaller.png);
+  }
+  .bank-cimbniaga {
+    background: url(../img/cimb_clicks_logo_smaller.png);
+  }
+}
+
+.animate-show {
+  opacity:1;
+  -webkit-transition: all 0.5s ease-in;
+  -moz-transition: all 0.5s ease-in;
+  -ms-transition: all 0.5s ease-in;
+  -o-transition: all 0.5s ease-in;
+  transition: all 0.5s ease-in;
+  max-height: 500px;
+}
+
+.animate-show.ng-hide {
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -ms-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+  overflow: hidden;
+  max-height: 0; 
+/*  line-height:0;*/
+  opacity:0;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+.vertical-align {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+input[type="radio"] {
+    display:none;
+
+}
+
+input[type="radio"] + label span {
+     border: 1px solid #cccccc;
+}
+
+input[type="radio"]:checked + label span.bank-bni{
+     border: 2px solid #005E6A;
+}
+
+input[type="radio"]:checked + label span.bank-mandiri{
+     border: 2px solid #1B4A7F;
+}
+
+input[type="radio"]:checked + label span.bank-cimbniaga{
+     border: 2px solid #EB3232;
+}
+
+input[type="radio"] + label span,
+input[type="radio"]:checked + label span {
+  cursor: pointer;
+  -webkit-transition: border 0.2s linear;
+  -o-transition: border 0.2s linear;
+  -moz-transition: border 0.2s linear;
+  transition: border 0.2s linear;
+}

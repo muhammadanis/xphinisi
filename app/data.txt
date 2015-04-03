@@ -1,0 +1,11 @@
+[
+	{	
+		"productName":"LG Nexus 4 16GB Black",
+		"productQty":"1",
+		"productPrice":"3999000"
+	},
+	{	"productName":"Samsung Galaxy Note 3, Black",
+		"productQty":"1",
+		"productPrice":"8499000"
+	}
+]
