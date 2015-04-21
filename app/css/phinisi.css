@@ -1,33 +1,23 @@
 body {
-  background: url(../img/dummy-data/dummy-branding.jpg) no-repeat center center fixed;
+  background: #FFFFFF;
   padding-top: 20px;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
 }
 .header {
   text-align: center;
 }
-.logo {
-  margin: 0;
-  text-align: center;
-}
 .label {
   display: block;
-  color: #555555;
-  text-transform: uppercase;
-  font-size: smaller;
+  color: #858585;
+  font-size: 12px;
   padding: 5px 0;
+  text-align: left;
 }
 .label2 {
   display: block;
   color: #555555;
-  font-size: smaller;
+  font-size: 12px;
   padding: 5px 0;
-}
-.default-text {
-  color: #dddddd;
+  margin-bottom: 10px;
 }
 .wrapper {
   border: 1px solid #c3c3c3;
@@ -51,14 +41,6 @@ body {
 .inner-wrapper:after {
   clear: both;
 }
-.w-title {
-  padding: 10px 10px;
-  border-bottom: 1px solid #cccccc;
-  background-color: #fff;
-  color: #555;
-  margin: 0;
-  text-transform: uppercase;
-}
 .total-amount {
   font-size: 24px;
   color: #555555;
@@ -68,8 +50,19 @@ body {
   border: 1px solid #ccc;
   padding: 5px 10px;
   margin-bottom: 10px;
-  -webkit-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.2);
-  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+.content-wrapper.blue {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}
+.content-wrapper.red {
+  border-color: #843534;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #ce8483;
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #ce8483;
 }
 .content-wrapper input:focus {
   outline: 0;
@@ -82,7 +75,6 @@ body {
   margin-bottom: 0;
 }
 .tab {
-
   border-bottom: 1px solid #cccccc;
   margin-bottom: -1px;
 }
@@ -94,12 +86,12 @@ body {
   margin: 0;
   text-transform: uppercase;
   cursor: pointer;
+  font-weight: bold;
 }
 .hr-product {
   color: #EFEFEF;
   margin: 0;
   display: block;
-
 }
 .btn-pay {
   text-transform: uppercase;
@@ -118,7 +110,7 @@ body {
 }
 .btn-show-details {
   color: #333333;
-  background-color: #FFFFFF;
+  background-color: #EFEFEF;
   border-color: #cccccc;
   border-radius: 0;
   padding: 5px 15px;
@@ -127,7 +119,7 @@ body {
 }
 .btn-show-details:hover {
   color: #333333;
-  background-color: #EFEFEF;
+  background-color: #DDDDDD;
 }
 .btn-hide-details,
 .btn-hide-details:focus {
@@ -148,10 +140,22 @@ body {
   border-bottom: 1px solid #cccccc;
 }
 .credit-card input {
-  border: 0;
+/*  border: 0;*/
 }
 .card-number {
   font-size: 24px;
+  color: #555555;
+  height: 46px;
+}
+.card-number.blue {
+  color: #105EA0;
+  font-weight: bold;
+}
+.card-number.red {
+  color: #b02424;
+  font-weight: bold;
+}
+.card-number.black {
   color: #555555;
 }
 .cc-data {
@@ -211,10 +215,15 @@ body {
   display: block;
 }
 .item-name {
+  font-size: 18px;
   text-transform: uppercase;
 }
+.item-image {
+  width: 100%;
+  height: auto;
+}
 .price {
-  text-align: right;
+  text-align: left;
 }
 .price.total {
   font-size: 16px;
@@ -239,7 +248,7 @@ body {
   background: url(../img/mandiri_logo.png);
 }
 .bank-cimbniaga {
-  background: url(../img/cimb_clicks_logo.png);
+  background: url(../img/cimb_niaga_logo.png);
 }
 @media (max-width: 480px) {
   .total-amount {
@@ -280,7 +289,7 @@ body {
     background: url(../img/mandiri_logo_smaller.png);
   }
   .bank-cimbniaga {
-    background: url(../img/cimb_clicks_logo_smaller.png);
+    background: url(../img/cimb_niaga_logo_smaller.png);
   }
 }
 
@@ -300,10 +309,21 @@ body {
   -ms-transition: all 0.5s ease-out;
   -o-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
-  overflow: hidden;
   max-height: 0; 
-/*  line-height:0;*/
   opacity:0;
+}
+
+.animate-slide-down {
+  transform: scale(1,1);
+  -webkit-transition: transform 0.25s ease-out;
+  -moz-transition: transform 0.25s ease-out;
+  -ms-transition: transform 0.25s ease-out;
+  -o-transition: transform 0.25s ease-out;
+  transition: transform 0.25s ease-out;
+}
+
+.animate-slide-down.ng-hide {
+  transform: scale(1,0);
 }
 
 .vcenter {
@@ -326,7 +346,6 @@ body {
 
 input[type="radio"] {
     display:none;
-
 }
 
 input[type="radio"] + label span {
@@ -352,4 +371,80 @@ input[type="radio"]:checked + label span {
   -o-transition: border 0.2s linear;
   -moz-transition: border 0.2s linear;
   transition: border 0.2s linear;
+}
+
+.form-control {
+/*  -webkit-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.2);*/
+  border-radius: 0px;
+  margin-bottom: 10px;
+}
+
+input[type=radio].css-checkbox {
+  position:absolute; 
+  z-index:-1000; 
+  left:-1000px; 
+  overflow: hidden; 
+  clip: rect(0 0 0 0); 
+  height:1px; 
+  width:1px; 
+  margin:-1px; 
+  padding:0; 
+  border:0;
+}
+
+input[type=radio].css-checkbox + label.css-label {
+  padding-left:28px;
+  height:23px; 
+  display:inline-block;
+  line-height:23px;
+  background-repeat:no-repeat;
+  background-position: 0 0;
+  font-size:15px;
+  vertical-align:middle;
+  cursor:pointer;
+
+}
+
+input[type=radio].css-checkbox:checked + label.css-label {
+  background-position: 0 -23px;
+}
+label.css-label {
+  background-image:url(http://csscheckbox.com/checkboxes/u/csscheckbox_81e00c47968e53d13f77901d81815d27.png);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.verticalLine {
+    padding-left: 10px;
+    border-left: 2px solid #EFEFEF;
+    height: 80%;
+}
+
+/* enable absolute positioning */
+.inner-addon { 
+    position: relative; 
+}
+
+/* style icon */
+.inner-addon i {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+/* align icon */
+.left-addon i  { left: 0px;}
+.right-addon i { top: 6px; right: 10px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+
+.error-message {
+  color: #b02424;
 }

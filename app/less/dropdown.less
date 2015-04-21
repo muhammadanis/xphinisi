@@ -1,4 +1,4 @@
-@height:40px;
+@height:50px;
 @spacing:10px;
 @placeholder-colour:#AAA;
 @select-colour:#2875C7;
@@ -15,7 +15,7 @@
 dropdown {
 	float:left;
 	display:block;
-	width:250px;
+	width:100%;
 	
 	>div {
 		float:left;
@@ -27,14 +27,15 @@ dropdown {
 			background:white;
 			height:@height;
 			cursor:pointer;
-			border:solid 1px @border-colour;
 			box-sizing:border-box;
+			padding-top: 7.5px;
+			padding-bottom: 7.5px;
 			
-			@icon-width:14px;
+			@icon-width:50px;
 			>* {
 				float:left;
-				height:100%;
-				.vertical-centre(@height);
+				height:35px;
+				.vertical-centre(35px);
 			}
 			
 			>span {
@@ -53,11 +54,13 @@ dropdown {
 			>i {
 				position:relative;
 				width:@icon-width;
-				margin-left:(@spacing+@icon-width)*-1;
+				margin-left:(@spacing+@icon-width)*-1;				
 				font-size:1.125em;
 				font-weight:bold;
-				padding-right:@spacing;
+				padding-left: 20px;
+				padding-right:20px;
 				text-align:right;
+				border-left: 1.5px solid #EFEFEF;
 			}
 		}
 
@@ -66,15 +69,15 @@ dropdown {
 			width:100%;
 			position:relative;
 			width:100%;
-			transform:scale(1, 0);
-			transition:transform ease 250ms;
-			
+			z-index: 999;
+
 			>div {
 				position:absolute;
 				width:100%;
 				z-index:2;
 				cursor:pointer;
 				background:white;
+				border:solid 1px @border-colour;
 				
 				>div {
 					float:left;
@@ -84,7 +87,7 @@ dropdown {
 					box-sizing:border-box;
 					border:solid 1px @border-colour; border-top:none;
 					
-					@icon-width:20px;
+					@icon-width:30px;
 					
 					&:hover {
 						background:#F0F0F0;
@@ -112,7 +115,7 @@ dropdown {
 						float:left;
 						width:@icon-width;
 						margin-left:@icon-width*-1;
-						display:none;
+
 					}
 					
 					&.selected>i {
@@ -120,10 +123,9 @@ dropdown {
 					}
 				}
 			}
+
 		}
 	}
 
-	>div.show>div.dropdown-list {
-		transform:scale(1, 1);
-	}
+
 }

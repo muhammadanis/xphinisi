@@ -5,259 +5,445 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/dropdown.css" rel="stylesheet">
     <link href="css/font-awesome.css" rel="stylesheet">
-    <link href="css/phinisi.css" rel="stylesheet">
+    <link rel="stylesheet/less" type="text/css" href="less/phinisi.less">
     <link rel="stylesheet/less" type="text/css" href="less/dropdown.less" />
-    <link rel="stylesheet" href="css/jquery.fancybox.css">
+<!--     <link rel="stylesheet" href="css/jquery.fancybox.css"> -->
+    <!-- JavaScript -->
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="js/angular-payments.js"></script>
-    <script src="js/controllers.js"></script>
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/ui-bootstrap-0.12.1.min.js"></script>
 
-<!--     // <script src="components/version/version.js"></script>
-    // <script src="components/version/version-directive.js"></script>
-    // <script src="components/version/interpolate-filter.js"></script> -->
+    <script src="js/controllers.js"></script>
     <script src="js/less.js"></script>
     <script type="text/javascript" src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script type="text/javascript" src="js/jquery.fancybox.pack.js"></script>
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
 
-    <script>
-
-    angular.module('app', ['paymentApp','ngAnimate', 'angularPayments'])
-
-    // MainController = function($scope){
-    //   $scope.handleStripe = function(status, response){
-    //     if(response.error) {
-    //       // there was an error. Fix it.
-    //     } else {
-    //       // got stripe token, now charge it or smt
-    //       token = response.id
-    //     }
-    //   }
-    // }
-
+    <!-- // <script type="text/javascript" src="js/jquery.fancybox.pack.js"></script> -->
+    <script type="text/javascript">
+      window.onbeforeunload = function (event) {
+        var message = 'Sure you want to leave?';
+        if (typeof event == 'undefined') {
+          event = window.event;
+        }
+        if (event) {
+          event.returnValue = message;
+        }
+        return message;
+      }
     </script>
-
   </head>
 
-  <body ng-app="app">
+  <body ng-app="paymentApp">
     <div class="container">
       <div class="row">
         <div class=" col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
-          <form ng-submit="submit()" ng-controller="submitController">
-            <div class="header wrapper">
+          <!-- Payment Form -->
+          
+            <!-- Header Section -->
+            <div class="header-section wrapper">
               <div class="inner-wrapper">
-                <!-- <h1 class="logo">Merchant Logo</h1> -->
                 <img src="img/dummy-data/storelogo.png" alt="Store Logo">
               </div>
             </div>
 
-            <!-- Select Payment Type, e.g Credit Card, Mandiri, etc -->
-            <div class="payment-select wrapper" ng-controller="dropdownDemo">
-              <div class="inner-wrapper" >
-                <!-- Single button -->
-<!--                 <div class="btn-group">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <span class="default-text">Choose Payment Method </span> <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Credit Card</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Virtual Account</a></li>
-                  </ul>
-                </div> -->
-              <dropdown placeholder="Colour..." list="colours" selected="colour" property="name">  
+            <!-- Payment Form -->
+            <form name="form" ng-submit="submit()" ng-controller="submitController" novalidate>
 
-              </dropdown>
+              <div class="payment-page" ng-show="paymentStatus == 'default'">
+                <!-- Payment Select Section -->
+                <div class="payment-select-section wrapper">
+                  <div class="inner-wrapper nopadding" >
+                    <dropdown placeholder="Select Your Payment Method..." list="payments" selected="paymentType" property="display_name">
+                    </dropdown>
+                  </div>
+                </div>
 
+                <!-- Select Payment -->
+                <div class="payment-section wrapper" ng-controller="buttonController" ng-show="paymentType != 'default'">
+                  
+                  <!-- Total Amount -->
+                  <div class="total-amount-section row">
+                    <div class="inner-wrapper vertical-align">
+                      <div class=" col-xs-7 col-md-8">
+                        <span class="small-text-label">TOTAL AMOUNT</span>
+                        <span class="total-amount-label" ng-cloak>{{ totalPrice() | mycurrency}}</span>
+                      </div>
+                      <div class=" col-xs-5 col-md-4">
+                        <button type="button" id="show-button" class="btn btn-show-details pull-right" ng-class="{'btn-hide-details' : buttonActive}" ng-click="buttonClicked()" ng-cloak>{{ buttonDetails }}</button>  
+                      </div>
+                    </div>
+                  </div>
 
+                  <!-- Purchased Items -->
+                  <div class="purchased-product-section animate-show" ng-show="buttonActive">
+                    <div class="inner-wrapper" ng-cloak>
+
+                      <!-- Row 1 -->
+                      <div class="row item" ng-repeat="item in purchasedProducts">
+                        <div class="col-md-5 col-xs-5">
+                          <img class="item-image" src="../app/img/lg_nexus_5.jpg">
+                        </div>
+                        <div class="col-md-7 col-xs-7">
+                          <span class="item-name">{{ item.name }}</span>
+                          <span class="price">{{ item.price | mycurrency}}</span>
+                        </div>
+                      </div>
+                      
+                      <hr class="hr-product" ng-show="purchasedProducts.length != 1"/>
+                      
+                      <!-- Row 3 -->
+                      <div class="row item" ng-show="purchasedProducts.length != 1">
+                        <div class="col-md-8 col-xs-6">
+                          <span class="item-name">Total</span>
+                        </div>
+                        <div class="col-md-4 col-xs-6">
+                          <span class="price total">{{ totalPrice() | mycurrency }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Credit Card -->
+                  <div class="credit-card-form animate-show" ng-show="paymentType.display_name == 'Credit Card'">
+                    <ng-form name="creditCardForm">
+                      <div class="credit-card-section animate-show">
+                        <div class="row">
+                          <div class="col-xs-12 col-sm-12 col-md-12 spacing-form animate-blink" ng-show="responseStatus == 'invalid'">
+                            <div class="error-box">
+                              <span class="error-message">{{statusMessage}}</span>
+                            </div>
+                          </div>
+                        </div>  
+                        <div class="row">
+                          <div class="col-xs-12 col-sm-12 col-md-12 spacing-form">
+                            <span class="small-text-label">CREDIT CARD NUMBER (VISA / MASTERCARD)</span>
+                            <div class=" inner-addon right-addon">
+                              <input id="card_number" name="cardnumber" class="card-number pull-left form-control" ng-class="{default:'black', visa:'blue', mastercard:'blue', invalid:'red'}[status]" type="text"  placeholder="4234 5678 1234 5678" ng-model="creditCard.card_number" payments-format="card" required/>
+                              <i class="cc-icon pull-right" ng-class="{default:'card-default', visa:'card-visa', mastercard:'card-mastercard', invalid:'card-invalid'}[status]"></i>
+                              <div ng-show="form.$submitted || creditCardForm.cardnumber.$touched">
+                                <span class="error-message" ng-show="status == 'default'">Please complete your credit card number</span>
+                                <span class="error-message" ng-show="status == 'invalid'">Credit Card Number is Invalid</span>
+                              </div>
+                          </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-xs-4 col-sm-4 col-md-4 spacing-form">
+                            <span class="small-text-label">EXP. DATE</span>
+                            <div class="right-inner-addon"> 
+                              <input type="text" id="card_expiry_date" name="expdate" class="form-control" placeholder="MM/YYYY" ng-model="card_exp_date" required payments-format="expiry" exp-date/>
+                              <div ng-show="form.$submitted || creditCardForm.expdate.$touched">
+                                <i class="glyphicon glyphicon-ok" ng-show="creditCardForm.expdate.$valid"></i>
+                                <i class="glyphicon glyphicon-remove" ng-show="!creditCardForm.expdate.$valid"></i>
+                                <span class="error-message" ng-show="creditCardForm.expdate.$error.required">Exp.Date is required.</span>
+                                <span class="error-message" ng-show="creditCardForm.expdate.$error.expDate">Exp.Date is invalid.</span>
+                              </div>
+                            </div>
+                          </div>
+
+<!--                           <div class="col-xs-3 col-sm-3 col-md-3 spacing-form">
+                            <span class="small-text-label">EXP. YEAR</span>
+                            <div class="right-inner-addon">             
+                              <input id="card_expiry_date" name="expyear" class="form-control" type="text" placeholder="YYYY" ng-model="creditCard.card_exp_year" maxlength="4" required number="year"/>
+                              <div ng-show="form.$submitted || creditCardForm.expyear.$touched">
+                                <i class="glyphicon glyphicon-ok" ng-show="creditCardForm.expyear.$valid"></i>
+                                <i class="glyphicon glyphicon-remove" ng-show="!creditCardForm.expyear.$valid"></i>
+                                <span class="error-message" ng-show="creditCardForm.expyear.$error.required">Exp.Year is required.</span>
+                                <span class="error-message" ng-show="creditCardForm.expyear.$error.number">Exp.Year is invalid.</span>
+                              </div>
+                            </div>
+                          </div> -->
+            
+                          <div class="col-xs-3 col-sm-3 col-md-3 spacing-form">       
+                            <span class="small-text-label">CVV</span>
+                            <div class="right-inner-addon">   
+                              <input id="card_cvv" name="cvv" class="form-control" type="password" placeholder="***" ng-model="creditCard.card_cvv" payments-format="cvc" required/>
+                              <div ng-show="form.$submitted || creditCardForm.cvv.$touched">
+                                <i class="glyphicon glyphicon-ok" ng-show="creditCardForm.cvv.$valid"></i>
+                                <i class="glyphicon glyphicon-remove" ng-show="!creditCardForm.cvv.$valid"></i>
+                                <span class="error-message" ng-show="creditCardForm.cvv.$error.required">CVV is required.</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-form>
+                    </div>
+
+                    <!-- Payment Options -->
+                    <div class="tab">
+                      <h5 ng-click="button2Clicked()">Installment Term <span style="color: #ff7400">(Optional)</span><i class="fa fa-lg pull-right" ng-class="button2Active ? 'fa-angle-up' : 'fa-angle-down'"></i></h5>
+                      <div class="payment-options animate-show" ng-show="button2Active">
+                        <div class="inner-wrapper">
+                          <span class="small-text-label">Please select your bank</span>
+                          <div class="row">
+
+                            <div class=" col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                              <input type="radio" id="bni" name="radio" ng-model="bankType" value="bni" />   
+                              <small-text-label for="bni"><span class="bank-logo bank-bni"></span></small-text-label>
+                            </div>
+
+                            <div class=" col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                              <input type="radio" id="mandiri" name="radio" ng-model="bankType" value="mandiri" />   
+                              <small-text-label for="mandiri"><span class="bank-logo bank-mandiri"></span></small-text-label>
+                            </div>
+
+                            <div class=" col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                              <input type="radio" id="cimb_clicks" name="radio" ng-model="bankType" value="cimb_clicks" />   
+                              <small-text-label for="cimb_clicks"><span class="bank-logo bank-cimbniaga"></span></small-text-label>
+                            </div>
+                             
+                          </div>
+
+                          <span class="small-text-label animate-float-left" ng-show="bankType != ''">Please select your installment term</span>
+                          <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 animate-float-left" ng-show="bankType != ''">
+
+                            <div class="row">
+                              <input type="radio" id="3-months" class="css-checkbox" name="radio2" ng-model="installment" value="3" />   
+                              <small-text-label for="3-months" class="css-small-text-label">{{ totalPrice()/3 | mycurrency }} x 3 months </small-text-label>
+                            </div>
+
+                            <div class="row">
+                              <input type="radio" id="6-months" class="css-checkbox" name="radio2" ng-model="installment" value="6" />   
+                              <small-text-label for="6-months" class="css-small-text-label">{{ totalPrice()/6 | mycurrency }} x 6 months </small-text-label>
+                            </div>
+
+                            <div class="row">
+                              <input type="radio" id="12-months" class="css-checkbox" name="radio2" ng-model="installment" value="12" />   
+                              <small-text-label for="12-months" class="css-small-text-label">{{ totalPrice()/12 | mycurrency }} x 12 months</small-text-label>
+                            </div>
+                             
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Virtual Account -->
+                  <div class="virtual-account-section animate-show" ng-show="paymentType.display_name == 'Virtual Account'">
+                    <div class="row">
+                      <div class="col-xs-12 col-md-12 col-lg-12">
+                        <span class="small-text-label">VIRTUAL ACCOUNT PAYMENT PROCESS</span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-12 col-md-12 col-lg-12">
+                        <img src="img/va_process.png" class="virtual-account-process"></img>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Shipping Information -->
+                  <div class="tab">
+                    <h5 ng-click="button3Clicked()">Shipping Information <i class="fa fa-lg pull-right" ng-class="button3Active ? 'fa-angle-up' : 'fa-angle-down'"></i></h5>
+                    <div class="shipping-information animate-show" ng-show="button3Active || form.$submitted">
+                      <div class="inner-wrapper">
+                      
+                          <span class="small-text-label">Please complete your shipping details below. All fields are required.</span>
+                          <ng-form name="shippingForm">
+                            <div class="row">
+
+                                <div class="col-xs-6 col-md-6 col-lg-6 spacing-form">
+                                  <span class="small-text-label">First Name</span>
+                                  <div class="right-inner-addon">
+                                    <input type="text" class="form-control" name="firstname" ng-model="customerDetails.first_name" required>
+                                    <div ng-show="form.$submitted || shippingForm.firstname.$touched">
+                                      <i class="glyphicon glyphicon-ok" ng-show="shippingForm.firstname.$valid"></i>
+                                      <i class="glyphicon glyphicon-remove" ng-show="!shippingForm.firstname.$valid"></i>
+                                      <span class="error-message" ng-show="shippingForm.firstname.$error.required">First Name is required.</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-xs-6 col-md-6 col-lg-6 spacing-form">
+                                  <span class="small-text-label">Last Name</span>
+                                  <div class="right-inner-addon">
+                                    <input type="text" class="form-control" name="lastname" ng-model="customerDetails.billing_address.last_name" required>
+                                    <div ng-show="form.$submitted || shippingForm.lastname.$touched">
+                                      <i class="glyphicon glyphicon-ok" ng-show="shippingForm.lastname.$valid"></i>
+                                      <i class="glyphicon glyphicon-remove" ng-show="!shippingForm.lastname.$valid"></i>
+                                      <span class="error-message" ng-show="shippingForm.lastname.$error.required">Last Name is required.</span>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xs-6 col-md-6 col-lg-6 spacing-form">
+                                <span class="small-text-label">Phone Number</span>
+                                <div class="right-inner-addon">
+                                  <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon1">+62</span>
+                                    <input type="text" class="form-control" name="phonenumber" maxlength="11" ng-model="customerDetails.phone" required number>
+                                  </div>
+                                  <div ng-show="form.$submitted || shippingForm.phonenumber.$touched">
+                                    <i class="glyphicon glyphicon-ok" ng-show="shippingForm.phonenumber.$valid"></i>
+                                    <i class="glyphicon glyphicon-remove" ng-show="!shippingForm.phonenumber.$valid"></i>
+                                    <span class="error-message" ng-show="shippingForm.phonenumber.$error.required">Phone Number is required.</span>
+                                    <span class="error-message" ng-show="shippingForm.phonenumber.$error.number">Please input a valid phone number.</span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-xs-6 col-md-6 col-lg-6 spacing-form">
+                                <span class="small-text-label">Email</span>
+                                <div class="right-inner-addon">
+                                  <input type="email" class="form-control" name="email" ng-model="customerDetails.email" required="">
+                                  <div ng-show="form.$submitted || shippingForm.email.$touched">
+                                    <i class="glyphicon glyphicon-ok" ng-show="shippingForm.email.$valid"></i>
+                                    <i class="glyphicon glyphicon-remove" ng-show="!shippingForm.email.$valid"></i>
+                                    <span class="error-message" ng-show="shippingForm.email.$error.required">Email is required.</span>
+                                    <span class="error-message" ng-show="shippingForm.email.$error.email">Please input a valid email.</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xs-12 col-md-12 col-lg-12 spacing-form">
+                                <span class="small-text-label">Address</span>
+                                <div class="right-inner-addon">
+                                  <input type="text" class="form-control" name="address" ng-model="customerDetails.billing_address.address" required>
+                                  <div ng-show="form.$submitted || shippingForm.address.$touched">
+                                    <i class="glyphicon glyphicon-ok" ng-show="shippingForm.address.$valid"></i>
+                                    <i class="glyphicon glyphicon-remove" ng-show="!shippingForm.address.$valid"></i>
+                                    <span class="error-message" ng-show="shippingForm.address.$error.required">Address is required.</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xs-6 col-md-6 col-lg-6 spacing-form">
+                                <span class="small-text-label">City</span>
+                                <div class="right-inner-addon">
+                                  <input type="text" class="form-control" name="city" ng-model="customerDetails.billing_address.city" required>
+                                  <div ng-show="form.$submitted || shippingForm.city.$touched">
+                                    <i class="glyphicon glyphicon-ok" ng-show="shippingForm.address.$valid"></i>
+                                    <i class="glyphicon glyphicon-remove" ng-show="!shippingForm.address.$valid"></i>
+                                    <span class="error-message" ng-show="shippingForm.city.$error.required">City is required.</span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-xs-6 col-md-6 col-lg-6 spacing-form">
+                                <span class="small-text-label">Postal Code</span>
+                                <div class="right-inner-addon">
+                                  <input type="text" class="form-control" name="postalcode" ng-model="customerDetails.billing_address.postal_code" maxlength="5" required>
+                                  <div ng-show="form.$submitted || shippingForm.postalcode.$touched">
+                                    <i class="glyphicon glyphicon-ok" ng-show="shippingForm.postalcode.$valid"></i>
+                                    <i class="glyphicon glyphicon-remove" ng-show="!shippingForm.postalcode.$valid"></i>
+                                    <span class="error-message" ng-show="shippingForm.postalcode.$error.required">Postal Code is required.</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </ng-form>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Confirm Button -->
+                  <div class="payment-action">
+                    <div class="inner-wrapper">
+                      <input type="submit" id="submit" class="btn-pay btn-primary" value="Confirm Payment" />
+                    </div>
+                  </div>
+                
+                </div>
+              </div>
+
+              <div class="3d-secure-loading-page">
+                <div class="wrapper" ng-show="paymentStatus == 'charge-loading' || paymentStatus == '3d-secure-loading'">
+
+                  <div class="tab 3d-secure-loading">
+                    <h3 ng-if="paymentStatus == 'charge-loading'">PROCESSING YOUR PAYMENT</h3>
+                    <h3 ng-if="paymentStatus == '3d-secure-loading'">REDIRECTING TO 3D SECURE</h3>
+                    <div class="inner-wrapper">
+                      <span class="loading-gif"></span>
+                      <div class="col-xs-8 col-xs-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" style="text-align: center; padding-bottom: 40px;">
+                        <span class="3d-secure-label" ng-if="paymentStatus == '3d-secure-loading'">Please wait while your payment being processed using 3D Secure service to enhance your payment experience!</span>
+                        <span class="3d-secure-label" ng-if="paymentStatus == 'charge-loading'">Please wait while your payment is being processed!</span>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="wrapper" ng-show="paymentStatus == '3d-secure'">
+                  <iframe width="100%" height="400px" class="3d-secure-content" iframe-onload="loadFinish()" ng-src="{{ responseStatus.redirect_url }}">
+                    
+                  </iframe>
+                </div>
 
               </div>
-            </div>
 
-            <!-- Select Payment -->
-            <div class="payment-main wrapper" ng-controller="buttonController">
-              
-                <!-- Total Amount -->
-                <div class="amount row">
-                  <div class="inner-wrapper vertical-align">
-                    <div class=" col-xs-7 col-md-8">
-                      <span class="label">Total Amount</span>
-                      <span class="total-amount" ng-cloak>{{ totalPrice() | mycurrency}}</span>
-                    </div>
-                    <div class=" col-xs-5 col-md-4">
-                      <button type="button" class="btn btn-show-details pull-right" ng-class="{'btn-hide-details' : buttonActive}" ng-click="buttonClicked()" ng-cloak>{{ buttonDetails }}</button>  
+              <div class="payment-complete-page wrapper animate-show" ng-show="paymentStatus == 'complete'">
+                  <div class="wrapper">
+                  <div class="payment-method">
+                    <div class="inner-wrapper">
+                      <span class="title">PAYMENT COMPLETE</span><br/>
+                      <div class="col-xs-6 col-md-6 col-lg-6 nopadding">
+                        <span class="small-text-label">PAYMENT TYPE : {{ paymentType.display_name }}</span>
+                      </div>
+                      <div class="col-xs-6 col-md-6 col-lg-6 nopadding">
+                        <span class="small-text-label pull-right">STATUS : {{ responseStatus.transaction_status }}</span>
+                      </div>  
                     </div>
                   </div>
-                </div>
-
-                <!-- Purchased Items -->
-                <div class="purchased-product animate-show" ng-show="buttonActive">
-                  <div class="inner-wrapper" ng-cloak>
-
-                    <!-- Row 1 -->
-                    <div class="row item" ng-repeat="item in purchasedProducts">
-                      <div class="col-md-8 col-xs-6">
-                        <span class="item-name">{{ item.productName }}</span>
-                        <span class="quantity">Quantity: {{ item.productQty }}</span>
-                      </div>
-                      <div class="col-md-4 col-xs-6">
-                        <span class="price">{{ item.productPrice | mycurrency}}</span>
+                  <div class="tab product-details">
+                    <h5>PURCHASED PRODUCTS</h5>
+                    <div class="inner-wrapper">
+                      <!-- Row 1 -->
+                      <div class="row item" ng-repeat="item in purchasedProducts">
+                        <div class="col-md-5 col-xs-5">
+                          <img class="item-image" src="../app/img/lg_nexus_5.jpg">
+                        </div>
+                        <div class="col-md-7 col-xs-7">
+                          <span class="item-name">{{ item.name }}</span>
+                          <span class="price">{{ item.price | mycurrency}}</span>
+                        </div>
                       </div>
                       
-                    </div>
+                      <hr class="hr-product" ng-show="purchasedProducts.length != 1"/>
+                      
+                      <!-- Row 3 -->
+                      <div class="row item" ng-show="purchasedProducts.length != 1">
+                        <div class="col-md-8 col-xs-6">
+                          <span class="item-name">Total</span>
+                        </div>
+                        <div class="col-md-4 col-xs-6">
+                          <span class="price total">{{ totalPrice() | mycurrency }}</span>
+                        </div>
+                      </div>
                     
-                    <hr class="hr-product" />
-                    
-                    <!-- Row 3 -->
-                    <div class="row item">
-                      <div class="col-md-8 col-xs-6">
-                        <span class="item-name">Total</span>
-                      </div>
-                      <div class="col-md-4 col-xs-6">
-                        <span class="price total">{{ totalPrice() | mycurrency}}</span>
-                      </div>
                     </div>
-                  </div>
-                </div>
-                
-                <!-- Credit Card -->
-                <div class="credit-card">
-                  <span class="label">Credit Card Number</span>
-                  <div class="content-wrapper">
-                    <div class="vertical-align">
-                      <div class="col-xs-10 col-sm-9 col-md-9 nopadding">
-                        <input id="card_number" class="card-number pull-left" type="text"  placeholder="4234 5678 1234 5678" ng-model="creditCard.card_number" payments-format="card" />
-                      </div>
-                      <div class="col-xs-2 col-sm-3 col-md-3 nopadding vcenter">
-                        <span class="cc-icon pull-right" ng-class="{default:'card-default', visa:'card-visa', mastercard:'card-mastercard', invalid:'card-invalid'}[status]"></span>
-                      </div>
-                    </div>
+
                   </div>
 
-                  <div class="row">
-                    <div class="col-xs-3 col-sm-3 col-md-3">
-                      <span class="label">Exp. Month</span>
-                      <div class="content-wrapper">              
-                        <input id="card_expiry_date" class="cc-data" type="text" placeholder="MM" ng-model="creditCard.card_exp_month" maxlength="2"/>
-                      </div>
-                    </div>
-
-                    <div class="col-xs-3 col-sm-3 col-md-3">
-                      <span class="label">Exp. Year</span>
-                      <div class="content-wrapper">              
-                        <input id="card_expiry_date" class="cc-data" type="text" placeholder="YYYY" ng-model="creditCard.card_exp_year" maxlength="4"/>
-                      </div>
-                    </div>
-      
-                    <div class="col-xs-2 col-sm-2 col-md-2">              
-                      <span class="label">CVV</span>
-                      <div class="content-wrapper">
-                        <input id="card_cvv" class="cc-data" type="password" placeholder="***" ng-model="creditCard.card_cvv" payments-format="cvc"/>
-                        
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Payment Options -->
-                <div class="tab">
-                  <h5 ng-click="button2Clicked()">Payment Options <i class="fa fa-lg pull-right" ng-class="button2Active ? 'fa-angle-up' : 'fa-angle-down'"></i></h5>
-                  <div class="payment-options animate-show" ng-show="button2Active">
-                    <div class="inner-wrapper">
-                      <span class="label2">Please select installment or points rewards</span>
-                      <div class="row">
-
-                        <div class=" col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                          <input type="radio" id="bni" name="radio" ng-model="bankType" value="bni" />   
-                          <label for="bni"><span class="bank-logo bank-bni"></span></label>
-                        </div>
-
-                        <div class=" col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                          <input type="radio" id="mandiri" name="radio" ng-model="bankType" value="mandiri" />   
-                          <label for="mandiri"><span class="bank-logo bank-mandiri"></span></label>
-                        </div>
-
-                        <div class=" col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                          <input type="radio" id="cimb_clicks" name="radio" ng-model="bankType" value="cimb_clicks" />   
-                          <label for="cimb_clicks"><span class="bank-logo bank-cimbniaga"></span></label>
-                        </div>
-                         
-                      </div>
-
-
-    <!--                   <div class="row">
-
-                        <div class=" col-xs-2 col-xs-offset-1 col-sm-3 col-sm-offset-1 col-md-3 col-md-offset-1">
-                          <button type="button" class="btn btn-default btn-sm">Installment</button>
-                        </div>
-
-                      </div> -->
-
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Shipping Information -->
-                <div class="tab">
-                  <h5 ng-click="button3Clicked()">Shipping Information <i class="fa fa-lg pull-right" ng-class="button3Active ? 'fa-angle-up' : 'fa-angle-down'"></i></h5>
-                  <div class="shipping-information animate-show" ng-show="button3Active">
+                  <div class="tab shipping-details">
+                    <h5>SHIPPING INFORMATION</h5>
                     <div class="inner-wrapper">
                       
-    <!--                     <div class="radio">
-                          <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-                            Same as Shipping Address
-                          </label>
-                        </div>
-                        <div class="radio">
-                          <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                            Different Address
-                          </label>
-                        </div> -->
-
-                        <span class="label">Full Name</span>
-                        <input type="text">
-                        <span class="label">Address</span>
-                        <input type="text">
-                        <span class="label">Phone Number</span>
-                        <input type="text">
-
-
+                      <span class="shipping-label-h1">{{ customerDetails.first_name + " " + customerDetails.billing_address.last_name}}</span>
+                      <span class="shipping-label-h2">{{ customerDetails.billing_address.address }} </span>
+                      <span class="shipping-label-h2">{{ customerDetails.billing_address.city + ', ' + customerDetails.billing_address.postal_code }}</span>
+                      <span class="shipping-label-h2">{{ "Phone : " + customerDetails.phone }}</span>
+                      <span class="shipping-label-h2">{{ "Email : " + customerDetails.email }}</span>
+                                  
                     </div>
                   </div>
-                </div>
 
-                <div class="payment-action">
-                  <div class="inner-wrapper">
-                    <input type="submit" id="submit" class="btn-pay btn-primary" value="Confirm Payment" />
-                  </div>
-                </div>
+              </div>
 
-
-            </div>
-
-          </form>
-
+            <!-- End of Payment Form -->
+            </form>
 
         </div>
       </div>
     </div>
 
-    <div class="footer">
-      This is footer
-    </div>
 
-    <script src="https://code.jquery.com/jquery.js"></script>
 
   </body>
 </html>

@@ -1,0 +1,17 @@
+<span class="small-text-label">{{displayName}}</span>
+<div class="right-inner-addon">
+	<ng-form name="innerForm">
+		<div ng-if="name == 'phonenumber'" class="input-group">
+        	<span class="input-group-addon" id="basic-addon1">+62</span>
+			<input type="{{type}}" class="form-control" name="{{name}}" ng-model="model" maxlength="{{maxlength}}" required>
+		</div>
+		<input ng-if="name != 'phonenumber'" type="{{type}}" class="form-control" name="{{name}}" ng-model="model" maxlength="{{maxlength}}" required>
+		<div ng-show="form.$submitted || innerForm[name].$touched">
+			<i class="glyphicon glyphicon-ok" ng-show="invalid == 'valid'"></i>
+			<i class="glyphicon glyphicon-remove" ng-show="invalid != 'valid'"></i>
+			<span class="error-message" ng-show="invalid == 'required'">{{displayName}} is required.</span>
+			<span class="error-message" ng-show="invalid == 'email'">Please input a valid email.</span>
+			<span class="error-message" ng-show="invalid == 'phone'">Please input a valid phone number.</span>
+		</div>
+	</ng-form>
+</div>
