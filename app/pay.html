@@ -1,45 +1,3 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Phinisi</title>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/dropdown.css" rel="stylesheet">
-    <link href="css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet/less" type="text/css" href="less/phinisi.less">
-    <link rel="stylesheet/less" type="text/css" href="less/dropdown.less" />
-<!--     <link rel="stylesheet" href="css/jquery.fancybox.css"> -->
-    <!-- JavaScript -->
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="js/angular-payments.js"></script>
-    <script src="js/jquery-2.1.3.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/ui-bootstrap-0.12.1.min.js"></script>
-
-    <script src="js/controllers.js"></script>
-    <script src="js/less.js"></script>
-    <script type="text/javascript" src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.js"></script>
-
-    <!-- // <script type="text/javascript" src="js/jquery.fancybox.pack.js"></script> -->
-    <script type="text/javascript">
-      window.onbeforeunload = function (event) {
-        var message = 'Sure you want to leave?';
-        if (typeof event == 'undefined') {
-          event = window.event;
-        }
-        if (event) {
-          event.returnValue = message;
-        }
-        return message;
-      }
-    </script>
-  </head>
-
-  <body ng-app="paymentApp">
     <div class="container">
       <div class="row">
         <div class=" col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
@@ -186,17 +144,17 @@
 
                             <div class=" col-xs-4 col-sm-4 col-md-4 col-lg-4">
                               <input type="radio" id="bni" name="radio" ng-model="bankType" value="bni" />   
-                              <small-text-label for="bni"><span class="bank-logo bank-bni"></span></small-text-label>
+                              <label for="bni"><span class="bank-logo bank-bni"></span></label>
                             </div>
 
                             <div class=" col-xs-4 col-sm-4 col-md-4 col-lg-4">
                               <input type="radio" id="mandiri" name="radio" ng-model="bankType" value="mandiri" />   
-                              <small-text-label for="mandiri"><span class="bank-logo bank-mandiri"></span></small-text-label>
+                              <label for="mandiri"><span class="bank-logo bank-mandiri"></span></label>
                             </div>
 
                             <div class=" col-xs-4 col-sm-4 col-md-4 col-lg-4">
                               <input type="radio" id="cimb_clicks" name="radio" ng-model="bankType" value="cimb_clicks" />   
-                              <small-text-label for="cimb_clicks"><span class="bank-logo bank-cimbniaga"></span></small-text-label>
+                              <label for="cimb_clicks"><span class="bank-logo bank-cimbniaga"></span></label>
                             </div>
                              
                           </div>
@@ -206,17 +164,17 @@
 
                             <div class="row">
                               <input type="radio" id="3-months" class="css-checkbox" name="radio2" ng-model="installment" value="3" />   
-                              <small-text-label for="3-months" class="css-small-text-label">{{ totalPrice()/3 | mycurrency }} x 3 months </small-text-label>
+                              <label for="3-months" class="css-label">{{ totalPrice()/3 | mycurrency }} x 3 months </label>
                             </div>
 
                             <div class="row">
                               <input type="radio" id="6-months" class="css-checkbox" name="radio2" ng-model="installment" value="6" />   
-                              <small-text-label for="6-months" class="css-small-text-label">{{ totalPrice()/6 | mycurrency }} x 6 months </small-text-label>
+                              <label for="6-months" class="css-label">{{ totalPrice()/6 | mycurrency }} x 6 months </label>
                             </div>
 
                             <div class="row">
                               <input type="radio" id="12-months" class="css-checkbox" name="radio2" ng-model="installment" value="12" />   
-                              <small-text-label for="12-months" class="css-small-text-label">{{ totalPrice()/12 | mycurrency }} x 12 months</small-text-label>
+                              <label for="12-months" class="css-label">{{ totalPrice()/12 | mycurrency }} x 12 months</label>
                             </div>
                              
                           </div>
@@ -442,8 +400,3 @@
         </div>
       </div>
     </div>
-
-
-
-  </body>
-</html>

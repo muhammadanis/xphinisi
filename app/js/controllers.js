@@ -1,4 +1,4 @@
-var paymentApp = angular.module("paymentApp", ['ngAnimate', 'angularPayments']);
+var paymentApp = angular.module("paymentApp", ['ngAnimate', 'angularPayments', 'ui.router']);
 
 
 paymentApp.config(function($sceDelegateProvider, $httpProvider) {
@@ -20,6 +20,20 @@ paymentApp.config(function($sceDelegateProvider, $httpProvider) {
   // delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
+paymentApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+  $urlRouterProvider.otherwise('/home');
+
+  $stateProvider
+
+    .state('home', {
+      url: '/home',
+      templateUrl: 'pay.html'
+    })
+
+  $locationProvider.html5Mode(true);
+
+})
+
 //Factory
 paymentApp.value('PaymentTypes', [{
     display_name: "Credit Card",
@@ -35,6 +49,8 @@ paymentApp.value('PaymentTypes', [{
     image_class: "bbm-logo"
   }]
 );
+
+
 
 //Service
 paymentApp.service('CreditCardService', function(){

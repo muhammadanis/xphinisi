@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Phinisi</title>
+    <base href="/app/">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/dropdown.css" rel="stylesheet">
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet/less" type="text/css" href="less/phinisi.less">
+    <link rel="stylesheet/less" type="text/css" href="less/dropdown.less" />
+<!--     <link rel="stylesheet" href="css/jquery.fancybox.css"> -->
+    <!-- JavaScript -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="js/angular-payments.js"></script>
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/ui-bootstrap-0.12.1.min.js"></script>
+
+    <script src="js/controllers.js"></script>
+    <script src="js/less.js"></script>
+    <script type="text/javascript" src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.js"></script>
+
+    <!-- // <script type="text/javascript" src="js/jquery.fancybox.pack.js"></script> -->
+    <script type="text/javascript">
+      window.onbeforeunload = function (event) {
+        var message = 'Sure you want to leave?';
+        if (typeof event == 'undefined') {
+          event = window.event;
+        }
+        if (event) {
+          event.returnValue = message;
+        }
+        return message;
+      }
+    </script>
+  </head>
+
+  <body ng-app="paymentApp">
+    <div ui-view></div>
+  </body>
+
+</html>
